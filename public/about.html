@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>About Us — Tahmesk Digital</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --white: #ffffff;
+      --lavender: #b191ff;
+      --plum: #850680;
+      --plum-dark: #5e0459;
+      --plum-deeper: #3a0238;
+      --lavender-light: #d4bcff;
+      --lavender-pale: #ede3ff;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--plum-deeper); color: var(--white); overflow-x: hidden; }
+
+    /* NAV */
+    .navigation { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: rgba(58,2,56,0.82); backdrop-filter: blur(18px); border-bottom: 1px solid rgba(177,145,255,0.2); }
+    .nav-container { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; }
+    .logo a { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 700; color: var(--white); text-decoration: none; letter-spacing: 0.04em; }
+    .logo a span { color: var(--lavender); }
+    .links { display: flex; gap: 2.5rem; align-items: center; }
+    .links a { color: rgba(255,255,255,0.72); text-decoration: none; font-size: 0.88rem; font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; position: relative; }
+    .links a::after { content: ''; position: absolute; bottom: -3px; left: 0; right: 0; height: 1px; background: var(--lavender); transform: scaleX(0); transition: transform 0.2s; }
+    .links a:hover { color: var(--lavender); }
+    .links a:hover::after { transform: scaleX(1); }
+    .links a.active { color: var(--lavender); }
+    .mobile-button { display: none; font-size: 1.5rem; cursor: pointer; color: var(--lavender); }
+    .mobile-links { display: none; position: fixed; top: 0; left: 0; width: 75%; height: 100%; background: var(--plum-deeper); border-right: 1px solid rgba(177,145,255,0.2); z-index: 300; padding: 2rem; flex-direction: column; gap: 1.5rem; transform: translateX(-100%); transition: transform 0.3s ease; }
+    .mobile-links-active { display: flex !important; transform: translateX(0) !important; }
+    .mobile-logo { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(177,145,255,0.2); }
+    .closebtn { font-size: 2rem; color: var(--lavender); text-decoration: none; cursor: pointer; }
+    .mobile-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 1rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.5rem 0; border-bottom: 1px solid rgba(177,145,255,0.1); }
+
+    /* PAGE HERO */
+    .page-hero {
+      min-height: 42vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 5% 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 30%, rgba(133,6,128,0.35) 0%, transparent 65%),
+                  radial-gradient(ellipse at 20% 80%, rgba(177,145,255,0.15) 0%, transparent 55%);
+    }
+    .page-hero-content { position: relative; z-index: 1; max-width: 700px; }
+    .page-eyebrow { display: inline-block; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--lavender); border: 1px solid rgba(177,145,255,0.4); border-radius: 100px; padding: 0.35rem 1.1rem; margin-bottom: 1.4rem; }
+    .page-hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.6rem,6vw,4.5rem); font-weight: 700; line-height: 1.08; color: var(--white); margin-bottom: 1rem; }
+    .page-hero h1 span { color: var(--lavender); font-style: italic; }
+    .page-hero p { font-size: 1.05rem; font-weight: 300; line-height: 1.8; color: rgba(255,255,255,0.65); max-width: 560px; margin: 0 auto; }
+
+    /* SECTIONS */
+    .section-white { background: var(--white); padding: 5rem 5%; color: var(--plum-deeper); }
+    .section-dark  { background: var(--plum-deeper); padding: 5rem 5%; }
+    .section-plum  { background: var(--plum); padding: 5rem 5%; }
+    .inner { max-width: 1100px; margin: 0 auto; }
+
+    .eyebrow { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500; margin-bottom: 0.8rem; }
+    .eyebrow-plum  { color: var(--plum); }
+    .eyebrow-lav   { color: var(--lavender); }
+    h2.section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.9rem,4vw,2.9rem); font-weight: 700; line-height: 1.15; margin-bottom: 1.2rem; }
+    h2.section-title.dark  { color: var(--plum-deeper); }
+    h2.section-title.light { color: var(--white); }
+    .lead { font-size: 1rem; font-weight: 300; line-height: 1.85; color: #4a3550; max-width: 640px; }
+    .lead-light { color: rgba(255,255,255,0.68); }
+
+    /* TWO COL */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .two-col-text p { font-size: 0.95rem; font-weight: 300; line-height: 1.9; color: #4a3550; margin-bottom: 1.2rem; }
+    .two-col-text p.light { color: rgba(255,255,255,0.65); }
+
+    /* STAT PILLS */
+    .stat-row { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 2rem; }
+    .stat-pill { background: var(--lavender-pale); border-radius: 12px; padding: 1.2rem 1.6rem; text-align: center; min-width: 110px; }
+    .stat-pill .n { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 700; color: var(--plum); line-height: 1; }
+    .stat-pill .l { font-size: 0.75rem; font-weight: 500; color: var(--plum-dark); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 0.3rem; }
+
+    /* VISUAL CARD (right side of two-col on dark bg) */
+    .visual-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(177,145,255,0.2); border-radius: 18px; padding: 2.5rem; }
+    .visual-card-plum { background: rgba(133,6,128,0.15); border-color: rgba(177,145,255,0.25); }
+
+    /* VALUE CARDS */
+    .values-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 3rem; }
+    .value-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(177,145,255,0.18); border-radius: 14px; padding: 2rem; transition: border-color 0.2s, transform 0.2s; }
+    .value-card:hover { border-color: rgba(177,145,255,0.45); transform: translateY(-4px); }
+    .value-icon { width: 44px; height: 44px; border-radius: 10px; background: rgba(133,6,128,0.25); border: 1px solid rgba(177,145,255,0.25); display: flex; align-items: center; justify-content: center; margin-bottom: 1.2rem; }
+    .value-icon svg { width: 20px; height: 20px; }
+    .value-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 700; color: var(--lavender-light); margin-bottom: 0.6rem; }
+    .value-card p { font-size: 0.87rem; line-height: 1.7; color: rgba(255,255,255,0.5); font-weight: 300; }
+
+    /* TEAM */
+    .team-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 3rem; }
+    .team-card { background: var(--white); border-radius: 14px; padding: 2rem; text-align: center; box-shadow: 0 4px 20px rgba(133,6,128,0.08); }
+    .team-avatar { width: 72px; height: 72px; border-radius: 50%; background: linear-gradient(135deg, var(--plum), var(--lavender)); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 700; color: var(--white); }
+    .team-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 700; color: var(--plum-deeper); margin-bottom: 0.2rem; }
+    .team-card .role { font-size: 0.8rem; font-weight: 500; color: var(--plum); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.8rem; }
+    .team-card p { font-size: 0.85rem; line-height: 1.65; color: #6a4a70; font-weight: 300; }
+
+    /* CTA BAND */
+    .cta-band { background: var(--plum); padding: 4rem 5%; text-align: center; }
+    .cta-band h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem,3.5vw,2.6rem); font-weight: 700; color: var(--white); margin-bottom: 0.8rem; }
+    .cta-band p { font-size: 0.98rem; color: rgba(255,255,255,0.7); margin-bottom: 2rem; font-weight: 300; }
+    .btn-primary { display: inline-block; background: var(--white); color: var(--plum); font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.9rem 2.4rem; border-radius: 100px; text-decoration: none; transition: opacity 0.2s, transform 0.15s; }
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-2px); }
+    .btn-outline-white { display: inline-block; background: transparent; color: rgba(255,255,255,0.85); font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.9rem 2.4rem; border-radius: 100px; text-decoration: none; border: 1.5px solid rgba(255,255,255,0.4); margin-left: 1rem; transition: border-color 0.2s, color 0.2s, transform 0.15s; }
+    .btn-outline-white:hover { border-color: var(--white); color: var(--white); transform: translateY(-2px); }
+
+    /* DIVIDER */
+    .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(177,145,255,0.3), transparent); margin: 0; }
+
+    /* FOOTER */
+    #footer { background: var(--plum-deeper); padding: 2.5rem 5%; border-top: 1px solid rgba(177,145,255,0.15); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 700; color: var(--white); text-decoration: none; }
+    .footer-logo span { color: var(--lavender); }
+    .footer-copy { font-size: 0.78rem; color: rgba(255,255,255,0.3); }
+    .footer-links { display: flex; gap: 1.8rem; list-style: none; }
+    .footer-links a { color: rgba(255,255,255,0.4); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--lavender); }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .fade-up { animation: fadeUp 0.7s ease both; }
+
+    @media (max-width: 768px) {
+      .links { display: none; }
+      .mobile-button { display: block; }
+      .two-col { grid-template-columns: 1fr; gap: 2.5rem; }
+      .values-grid { grid-template-columns: 1fr; }
+      .team-grid { grid-template-columns: 1fr; }
+      .stat-row { gap: 1rem; }
+      #footer { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="navigation">
+  <nav class="nav-container">
+    <div class="logo"><a href="index.html">TAHMESK<span>DIGITAL</span></a></div>
+    <div class="mobile-button" onclick="toggleMobileNavigation()">&#9776;</div>
+    <div class="links">
+      <a href="index.html">Home</a>
+      <a href="about.html" class="active">About</a>
+      <a href="index.html#services">Services</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <div id="mobile-sidenav" class="mobile-links">
+      <div class="mobile-logo">
+        <a href="index.html" style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:#fff;text-decoration:none;">TAHMESK<span style="color:#b191ff;">DIGITAL</span></a>
+        <a href="javascript:void(0)" class="closebtn" onclick="toggleMobileNavigation()">&times;</a>
+      </div>
+      <a href="index.html"          onclick="toggleMobileNavigation()">Home</a>
+      <a href="about.html"          onclick="toggleMobileNavigation()">About</a>
+      <a href="index.html#services" onclick="toggleMobileNavigation()">Services</a>
+      <a href="index.html#contact"  onclick="toggleMobileNavigation()">Contact</a>
+    </div>
+  </nav>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-content fade-up">
+    <div class="page-eyebrow">Who We Are</div>
+    <h1>We are <span>Tahmesk Digital</span></h1>
+    <p>A digital marketing agency built by Africans, for African businesses — helping brands grow online with strategy, creativity, and real results.</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- OUR STORY -->
+<div class="section-white">
+  <div class="inner two-col">
+    <div class="two-col-text">
+      <div class="eyebrow eyebrow-plum">Our Story</div>
+      <h2 class="section-title dark">From an idea to a movement</h2>
+      <p>Tahmesk Digital was born out of a simple frustration: too many talented African businesses were invisible online — not because they lacked quality, but because they lacked the right digital tools and support.</p>
+      <p>Founded in Nairobi, Kenya, we set out to bridge that gap. We combine modern marketing strategy with genuine understanding of the African market — how people discover businesses here, how they communicate, and how they transact.</p>
+      <p>Today we work with businesses across Kenya and the broader African market, helping them build credible, effective digital presences that attract customers and drive real growth.</p>
+
+      <div class="stat-row">
+        <div class="stat-pill"><div class="n">479+</div><div class="l">Clients</div></div>
+        <div class="stat-pill"><div class="n">20</div><div class="l">Years Exp.</div></div>
+        <div class="stat-pill"><div class="n">35</div><div class="l">Awards</div></div>
+        <div class="stat-pill"><div class="n">15</div><div class="l">Team Members</div></div>
+      </div>
+    </div>
+    <div>
+      <div class="visual-card" style="background:var(--lavender-pale);">
+        <div class="eyebrow eyebrow-plum" style="margin-bottom:1.5rem;">What drives us</div>
+        <div style="display:flex;flex-direction:column;gap:1.2rem;">
+          <div style="display:flex;gap:12px;align-items:flex-start;">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--plum);flex-shrink:0;margin-top:6px;"></div>
+            <p style="font-size:0.92rem;line-height:1.7;color:#4a3550;font-weight:300;">Every Kenyan business deserves a strong online presence, regardless of size or budget.</p>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start;">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--plum);flex-shrink:0;margin-top:6px;"></div>
+            <p style="font-size:0.92rem;line-height:1.7;color:#4a3550;font-weight:300;">Digital marketing should be practical, transparent, and measurable — not full of jargon.</p>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start;">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--plum);flex-shrink:0;margin-top:6px;"></div>
+            <p style="font-size:0.92rem;line-height:1.7;color:#4a3550;font-weight:300;">Africa's digital economy is growing fast — we want to make sure our clients grow with it.</p>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start;">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--plum);flex-shrink:0;margin-top:6px;"></div>
+            <p style="font-size:0.92rem;line-height:1.7;color:#4a3550;font-weight:300;">Technology built for the African context — M-Pesa, WhatsApp, mobile-first, offline-resilient.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OUR VALUES -->
+<div class="section-dark">
+  <div class="inner">
+    <div style="text-align:center;margin-bottom:0.5rem;">
+      <div class="eyebrow eyebrow-lav">What We Stand For</div>
+      <h2 class="section-title light">Our core values</h2>
+    </div>
+    <div class="values-grid">
+
+      <div class="value-card">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#b191ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <h3>Integrity</h3>
+        <p>We are transparent about what we can deliver, how much it costs, and what results to expect. No hidden fees, no empty promises.</p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#b191ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+        </div>
+        <h3>Clarity</h3>
+        <p>We communicate in plain language. Our strategies, reports, and recommendations are always clear and easy to act on.</p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#b191ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+        </div>
+        <h3>Results</h3>
+        <p>Everything we do is tied to a measurable outcome. We focus on the numbers that actually matter — leads, revenue, and return.</p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#b191ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <h3>Partnership</h3>
+        <p>We work alongside our clients, not just for them. Your success is our success — we're invested in your growth for the long term.</p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#b191ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2"/>
+            <line x1="8" y1="21" x2="16" y2="21"/>
+            <line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+        </div>
+        <h3>Innovation</h3>
+        <p>We stay ahead of the curve on digital trends, tools, and platforms — so our clients always benefit from what's working right now.</p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#b191ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+            <circle cx="12" cy="9" r="2.5"/>
+          </svg>
+        </div>
+        <h3>Africa-First</h3>
+        <p>We design for the realities of the African market — mobile usage, local payment methods, and the way communities here actually connect.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- TEAM -->
+<div class="section-white">
+  <div class="inner">
+    <div style="text-align:center;margin-bottom:0.5rem;">
+      <div class="eyebrow eyebrow-plum">The People</div>
+      <h2 class="section-title dark">Meet the team</h2>
+      <p class="lead" style="margin:0 auto;text-align:center;">A small, focused group of strategists, designers, and developers who care deeply about what they build.</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar">T</div>
+        <h3>Taheera Mohamed</h3>
+        <div class="role">Founder & Lead Strategist</div>
+        <p>Software developer and digital marketer with a background in web development, data analytics, and front-end design. Passionate about building for African markets.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">M</div>
+        <h3>Marketing Team</h3>
+        <div class="role">Content & Campaigns</div>
+        <p>Our creative team handles everything from social media content and copywriting to paid ad campaigns and email marketing flows.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">D</div>
+        <h3>Dev & Design</h3>
+        <div class="role">Web & Visual</div>
+        <p>Our technical team builds fast, modern websites and designs visual assets that are both beautiful and built to convert visitors into customers.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-band">
+  <h2>Ready to work with us?</h2>
+  <p>Let's have a conversation about your business and how we can help you grow.</p>
+  <a class="btn-primary" href="index.html#contact">Get in Touch</a>
+  <a class="btn-outline-white" href="vision.html">Our Vision →</a>
+</div>
+
+<!-- FOOTER -->
+<div id="footer">
+  <a href="index.html" class="footer-logo">TAHMESK<span>DIGITAL</span></a>
+  <ul class="footer-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+  <span class="footer-copy">© 2025 Tahmesk Digital. All rights reserved.</span>
+</div>
+
+<script>
+  function toggleMobileNavigation() {
+    document.getElementById('mobile-sidenav').classList.toggle('mobile-links-active');
+  }
+</script>
+</body>
+</html>
